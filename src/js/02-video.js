@@ -3,10 +3,11 @@ import Player from '@vimeo/player';
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 
-player.on('play', function () {
-  console.log('played the video!');
-});
+//получаем секунды по нажатию плей.пауза
+player.on('play', fTime);
 
-player.on('timeupdate', function () {
-  console.log(timeupdate);
-});
+let time = player.getCurrentTime().then(function (seconds) {});
+
+function fTime(time) {
+  console.log(time.seconds);
+}
