@@ -1,13 +1,18 @@
 import Player from '@vimeo/player';
+import throttle from 'lodash.throttle';
 
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 
-//получаем секунды по нажатию плей.пауза
-player.on('play', fTime);
+let sec = 0;
+player.on(
+  'timeupdate',
+  throttle(() => {
+    player.getCurrentTime().then(function (seconds) {
+      sec = Math.floor(seconds);
+      console.log(sec);
+    });
+  }, 1000)
+);
 
-let time = player.getCurrentTime().then(function (seconds) {});
-
-function fTime(time) {
-  console.log(time.seconds);
-}
+player.setCurrentTime(sec).then(function (seconds) {});
